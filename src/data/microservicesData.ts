@@ -1,0 +1,96 @@
+import type { MicroserviceNode, TrafficLogEntry, GatewayMetrics } from '../types';
+
+export const clusterMicroservices: MicroserviceNode[] = [
+  {
+    id: 'svc-auth',
+    name: 'Auth & Identity Engine',
+    framework: 'Python / Django REST & FastAPI',
+    port: 8001,
+    status: 'healthy',
+    uptimePercent: 99.99,
+    avgLatencyMs: 12.4,
+    cpuPercent: 18.2,
+    memoryMb: 342,
+    instanceCount: 3,
+  },
+  {
+    id: 'svc-users',
+    name: 'User RBAC & Quotas Service',
+    framework: 'Node.js / Express & Prisma',
+    port: 8002,
+    status: 'healthy',
+    uptimePercent: 99.97,
+    avgLatencyMs: 14.8,
+    cpuPercent: 24.5,
+    memoryMb: 410,
+    instanceCount: 4,
+  },
+  {
+    id: 'svc-payments',
+    name: 'Payments & Billing Gateway',
+    framework: 'Python / Django & Stripe SDK',
+    port: 8003,
+    status: 'healthy',
+    uptimePercent: 99.98,
+    avgLatencyMs: 22.1,
+    cpuPercent: 31.0,
+    memoryMb: 520,
+    instanceCount: 4,
+  },
+  {
+    id: 'svc-inventory',
+    name: 'Product Catalog & Inventory',
+    framework: 'Node.js / Fastify & Redis',
+    port: 8004,
+    status: 'healthy',
+    uptimePercent: 99.99,
+    avgLatencyMs: 8.6,
+    cpuPercent: 12.4,
+    memoryMb: 280,
+    instanceCount: 3,
+  },
+  {
+    id: 'svc-orders',
+    name: 'Order Fulfillment & RabbitMQ Dispatcher',
+    framework: 'Node.js & Celery Python Worker',
+    port: 8005,
+    status: 'healthy',
+    uptimePercent: 99.95,
+    avgLatencyMs: 16.2,
+    cpuPercent: 28.0,
+    memoryMb: 460,
+    instanceCount: 3,
+  },
+  {
+    id: 'svc-mysql',
+    name: 'MySQL 8.0 Primary Cluster (Percona)',
+    framework: 'MySQL 8.0 InnoDB + Read Replica',
+    port: 3306,
+    status: 'healthy',
+    uptimePercent: 100.0,
+    avgLatencyMs: 1.4,
+    cpuPercent: 35.8,
+    memoryMb: 2048,
+    instanceCount: 2,
+  }
+];
+
+export const initialTrafficLogs: TrafficLogEntry[] = [
+  { id: 'log-101', timestamp: '00:28:12.410', method: 'GET', path: '/api/v1/users', status: 200, latencyMs: 12.4, ip: '190.220.14.88', authMethod: 'Bearer JWT', service: 'Users Service' },
+  { id: 'log-102', timestamp: '00:28:11.890', method: 'POST', path: '/api/v1/payments/charge', status: 201, latencyMs: 28.5, ip: '201.240.18.9', authMethod: 'Bearer JWT', service: 'Payments Gateway' },
+  { id: 'log-103', timestamp: '00:28:11.200', method: 'GET', path: '/api/v1/products', status: 200, latencyMs: 6.2, ip: '181.44.20.110', authMethod: 'Public', service: 'Inventory Service' },
+  { id: 'log-104', timestamp: '00:28:10.740', method: 'POST', path: '/api/v1/auth/login', status: 200, latencyMs: 18.2, ip: '190.11.45.62', authMethod: 'Basic Auth', service: 'Auth Engine' },
+  { id: 'log-105', timestamp: '00:28:10.150', method: 'PATCH', path: '/api/v1/products/prd-01/stock', status: 429, latencyMs: 3.1, ip: '190.11.45.62', authMethod: 'API Key', service: 'Gateway Throttler' },
+  { id: 'log-106', timestamp: '00:28:09.500', method: 'GET', path: '/api/v1/gateway/health', status: 200, latencyMs: 1.8, ip: '10.0.0.1 (HealthCheck)', authMethod: 'Internal', service: 'Gateway Core' }
+];
+
+export const defaultGatewayMetrics: GatewayMetrics = {
+  totalRequests: 1482900,
+  successfulRequests: 1478200,
+  throttledRequests: 4388,
+  serverErrors: 312,
+  avgLatencyMs: 14.8,
+  p95LatencyMs: 24.2,
+  p99LatencyMs: 48.6,
+  activeJwtSessions: 2410,
+};
